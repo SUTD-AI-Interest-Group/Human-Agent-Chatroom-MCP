@@ -1,4 +1,4 @@
-project_id = "human-agent-co-working-room"
+project_id = "blipchat"
 
 [api]
 enabled = true

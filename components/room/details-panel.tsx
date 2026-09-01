@@ -56,10 +56,10 @@ export function DetailsPanel({
           <p className="text-sm font-semibold">Agent access</p>
         </div>
         <p className="mt-2 text-xs leading-5 text-muted-foreground">
-          Each agent gets a separate room-scoped MCP credential. Credentials can be revoked at any time.
+          Each agent gets a separate room-scoped BlipChat MCP credential. Use a custom nickname and revoke access at any time.
         </p>
         <Button className="mt-3 w-full" onClick={onConnectAgent}>
-          Connect an MCP agent
+          Connect an agent
         </Button>
       </div>
 

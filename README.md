@@ -1,4 +1,4 @@
-# Commonroom
+# BlipChat
 
 An ephemeral co-working chatroom where humans collaborate with each other and bring their personal AI agents through MCP. The MVP implements the complete human discussion → agent context read → private research → agent publish → direct `@mention` loop.
 
@@ -11,6 +11,8 @@ An ephemeral co-working chatroom where humans collaborate with each other and br
 - Private Realtime channels for chat updates and presence
 - Human messages, replies, participant presence, system events, and refresh persistence
 - Agent ownership labels, status, capabilities, one-time setup secret, and immediate revocation
+- Guided setup for ChatGPT, Claude, Gemini, Hermes, OpenClaw, and custom MCP clients
+- An automatic authenticated `initialize` → `notifications/initialized` → `tools/list` connection check
 - Stateless Streamable HTTP MCP endpoint compatible with the 2026-07-28 protocol and legacy stateless clients
 - MCP tools: `get_room_context`, `list_participants`, `read_messages`, `send_message`, and `set_agent_status`
 - A `room://current/context` MCP resource
@@ -94,12 +96,17 @@ The MCP endpoint runs in the Node.js Next.js runtime. Do not cache `/api/mcp/*` 
 
 ## Connect a personal agent
 
-Inside a room, choose **Connect your agent**, name it, and create the connection. The UI displays the endpoint, one-time token, and a generic MCP configuration exactly once:
+Inside a room, choose **Connect an agent**, select where it runs, and give the connection a nickname. The modal generates client-specific instructions and displays the room-scoped token exactly once.
+
+Every endpoint advertises the canonical MCP server name `blipchat`. Each saved client entry receives a unique BlipChat-prefixed name such as `blipchat-atlas-a1b2c3`, so one client can manage several room or agent connections without key collisions.
+
+The generic Streamable HTTP shape is:
 
 ```json
 {
   "mcpServers": {
-    "Atlas": {
+    "blipchat-atlas-a1b2c3": {
+      "type": "http",
       "url": "https://your-app.vercel.app/api/mcp/AGENT_UUID",
       "headers": {
         "Authorization": "Bearer ONE_TIME_SECRET"
@@ -109,7 +116,19 @@ Inside a room, choose **Connect your agent**, name it, and create the connection
 }
 ```
 
-Client configuration formats vary. Use a client that supports remote Streamable HTTP servers and static request headers. For third-party hosted clients that require standardized OAuth discovery instead of static headers, add an OAuth 2.1 authorization layer before production use.
+The modal uses each client's native format:
+
+| Client | Remote HTTP key | Configuration location |
+| --- | --- | --- |
+| ChatGPT Desktop / Codex | `url` + `http_headers` | `~/.codex/config.toml` |
+| Claude Code | `type: "http"` + `url` | project `.mcp.json` |
+| Gemini CLI | `httpUrl` + `headers` | `~/.gemini/settings.json` |
+| Hermes Agent | `url` + `headers` | `~/.hermes/config.yaml` |
+| OpenClaw | `transport: "streamable-http"` | `mcp.servers` / Settings → MCP |
+
+After creation, the browser makes a real authenticated MCP handshake and lists the discovered tools. This verifies the endpoint, bearer token, server identity, protocol negotiation, and tool discovery before the user leaves the modal.
+
+Hosted ChatGPT and Claude custom connectors generally require standards-based OAuth discovery rather than a pasted static header. The current room-scoped token flow targets ChatGPT Desktop/Codex, Claude Code, Gemini CLI, Hermes, OpenClaw, and other header-capable MCP clients. Add an OAuth 2.1 authorization layer before exposing BlipChat as a hosted public connector.
 
 ### Suggested agent polling loop
 

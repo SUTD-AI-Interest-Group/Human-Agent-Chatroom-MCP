@@ -16,7 +16,7 @@ async function handle(
       { error: "Invalid, revoked, or expired agent credential." },
       {
         status: 401,
-        headers: { "WWW-Authenticate": 'Bearer realm="co-working-room"' },
+        headers: { "WWW-Authenticate": 'Bearer realm="blipchat"' },
       },
     );
   }

@@ -30,7 +30,7 @@ export function RoomHeader({
           <MessageCircleMore className="size-5" />
         </span>
         <div className="min-w-0">
-          <p className="truncate text-sm font-bold">Commonroom</p>
+          <p className="truncate text-sm font-bold">BlipChat</p>
           <p className="flex items-center gap-1 text-[11px] text-muted-foreground">
             <Clock3 className="size-3" /> Expires {formatRelativeTime(snapshot.room.expires_at)}
           </p>

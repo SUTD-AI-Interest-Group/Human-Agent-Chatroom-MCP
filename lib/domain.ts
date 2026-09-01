@@ -64,10 +64,15 @@ export interface AgentConnectionSecret {
   agent: Agent;
   endpoint: string;
   token: string;
+  mcpServer: {
+    name: "blipchat";
+    connectionName: string;
+    transport: "streamable-http";
+  };
   configuration: {
     mcpServers: Record<
       string,
-      { url: string; headers: { Authorization: string } }
+      { type: "http"; url: string; headers: { Authorization: string } }
     >;
   };
 }
