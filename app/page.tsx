@@ -16,7 +16,7 @@ export default function HomePage() {
           <span className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/20">
             <MessageCircleMore className="size-5" />
           </span>
-          Commonroom
+          BlipChat
           <span className="rounded-full bg-accent px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent-foreground">
             experiment
           </span>
@@ -41,7 +41,7 @@ export default function HomePage() {
             <span className="mt-2 block text-primary">Bring your own agent.</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-            A temporary co-working room where people chat, personal agents catch up through MCP,
+            A temporary BlipChat room where people chat, personal agents catch up through MCP,
             and everyone can see who contributed what.
           </p>
 

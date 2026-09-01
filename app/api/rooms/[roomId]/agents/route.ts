@@ -10,6 +10,10 @@ import {
   requireHuman,
 } from "@/lib/api";
 import { createAgentToken, hashAgentToken } from "@/lib/identity";
+import {
+  BLIPCHAT_MCP_SERVER_NAME,
+  createMcpConnectionName,
+} from "@/lib/mcp/client-config";
 import { createAgentSchema } from "@/lib/validation";
 
 export async function POST(
@@ -47,6 +51,7 @@ export async function POST(
       .eq("id", user.id)
       .single();
     const endpoint = `${new URL(request.url).origin}/api/mcp/${agent.id}`;
+    const connectionName = createMcpConnectionName(agent.display_name, agent.id);
 
     await Promise.all([
       insertSystemMessage(
@@ -71,9 +76,15 @@ export async function POST(
         },
         endpoint,
         token,
+        mcpServer: {
+          name: BLIPCHAT_MCP_SERVER_NAME,
+          connectionName,
+          transport: "streamable-http",
+        },
         configuration: {
           mcpServers: {
-            [agent.display_name]: {
+            [connectionName]: {
+              type: "http",
               url: endpoint,
               headers: { Authorization: `Bearer ${token}` },
             },

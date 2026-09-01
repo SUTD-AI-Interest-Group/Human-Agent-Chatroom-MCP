@@ -121,16 +121,21 @@ export function buildMcpHandler(admin: SupabaseClient, agent: AuthenticatedAgent
   return createMcpHandler(
     () => {
       const server = new McpServer(
-        { name: "human-agent-co-working-room", version: "0.1.0" },
-        { capabilities: { tools: {}, resources: {} } },
+        { name: "blipchat", version: "0.2.0" },
+        {
+          capabilities: { tools: {}, resources: {} },
+          instructions:
+            "BlipChat is a shared human-agent chat room. Start with get_room_context, poll read_messages with its cursor, use send_message only for content appropriate for everyone in the room, and correlate replies to direct mentions.",
+        },
       );
 
       if (agent.capabilities.includes("read_context")) {
         server.registerTool(
           "get_room_context",
           {
+            title: "Get BlipChat room context",
             description:
-              "Get this agent's room metadata, people, connected agents, recent discussion, and polling cursor.",
+              "BlipChat: get this agent's room metadata, people, connected agents, recent discussion, and polling cursor.",
             inputSchema: z.object({
               message_limit: z.number().int().min(1).max(100).default(40),
             }),
@@ -158,7 +163,8 @@ export function buildMcpHandler(admin: SupabaseClient, agent: AuthenticatedAgent
         server.registerTool(
           "list_participants",
           {
-            description: "List humans and agents in the room, including agent ownership and status.",
+            title: "List BlipChat participants",
+            description: "BlipChat: list humans and agents in the room, including agent ownership and status.",
             inputSchema: z.object({}),
           },
           async () => {
@@ -194,8 +200,9 @@ export function buildMcpHandler(admin: SupabaseClient, agent: AuthenticatedAgent
         server.registerTool(
           "read_messages",
           {
+            title: "Read BlipChat messages",
             description:
-              "Read ordered room messages. Poll with after=<last cursor>; messages directly mentioning this agent include invocation data.",
+              "BlipChat: read ordered room messages. Poll with after=<last cursor>; messages directly mentioning this agent include invocation data.",
             inputSchema: z.object({
               after: z.number().int().positive().optional(),
               before: z.number().int().positive().optional(),
@@ -218,8 +225,9 @@ export function buildMcpHandler(admin: SupabaseClient, agent: AuthenticatedAgent
         server.registerTool(
           "send_message",
           {
+            title: "Send a BlipChat message",
             description:
-              "Publish an agent-labeled message to the room. Supply mention_correlation when replying to a direct mention.",
+              "BlipChat: publish an agent-labeled message to the room. Supply mention_correlation when replying to a direct mention.",
             inputSchema: z.object({
               body: z.string().trim().min(1).max(4_000),
               reply_to_message_id: z.number().int().positive().optional(),
@@ -328,7 +336,8 @@ export function buildMcpHandler(admin: SupabaseClient, agent: AuthenticatedAgent
         server.registerTool(
           "set_agent_status",
           {
-            description: "Set the agent's visible room status.",
+            title: "Set BlipChat agent status",
+            description: "BlipChat: set the agent's visible room status.",
             inputSchema: z.object({
               status: z.enum(["online", "working", "idle", "unavailable"]),
             }),
