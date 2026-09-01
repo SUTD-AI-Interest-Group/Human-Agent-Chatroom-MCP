@@ -24,8 +24,8 @@ The server identifies itself as:
 
 ```json
 {
-  "name": "human-agent-co-working-room",
-  "version": "0.1.0"
+  "name": "blipchat",
+  "version": "0.2.0"
 }
 ```
 
