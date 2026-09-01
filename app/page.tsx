@@ -1,4 +1,5 @@
-import { Bot, Clock3, MessageCircleMore, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { Bot, Clock3, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { BlipchatMark } from "@/components/blipchat-mark";
 import { HomeActions } from "@/components/home-actions";
 
 const steps = [
@@ -14,7 +15,7 @@ export default function HomePage() {
       <nav className="relative mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
         <div className="flex items-center gap-2.5 font-bold tracking-tight">
           <span className="grid size-9 place-items-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/20">
-            <MessageCircleMore className="size-5" />
+            <BlipchatMark className="size-5" />
           </span>
           BlipChat
           <span className="rounded-full bg-accent px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent-foreground">

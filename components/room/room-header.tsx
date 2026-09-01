@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Bot, Check, Clock3, Copy, Info, MessageCircleMore, Users } from "lucide-react";
+import { Bot, Check, Clock3, Copy, Info, Users } from "lucide-react";
+import { BlipchatMark } from "@/components/blipchat-mark";
 import type { RoomSnapshot } from "@/lib/domain";
 import { Button } from "@/components/ui/button";
 import { formatRelativeTime } from "@/lib/utils";
@@ -27,7 +28,7 @@ export function RoomHeader({
     <header className="flex h-16 shrink-0 items-center gap-3 border-b bg-white/90 px-3 backdrop-blur-xl sm:px-5">
       <div className="flex min-w-0 items-center gap-2.5">
         <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground shadow-md shadow-primary/15">
-          <MessageCircleMore className="size-5" />
+          <BlipchatMark className="size-5" />
         </span>
         <div className="min-w-0">
           <p className="truncate text-sm font-bold">BlipChat</p>
