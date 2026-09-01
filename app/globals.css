@@ -1,0 +1,82 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  --background: oklch(0.985 0.006 84);
+  --foreground: oklch(0.2 0.025 264);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.025 264);
+  --primary: oklch(0.53 0.205 274);
+  --primary-foreground: oklch(0.99 0.005 270);
+  --secondary: oklch(0.94 0.025 270);
+  --secondary-foreground: oklch(0.32 0.075 272);
+  --muted: oklch(0.955 0.01 84);
+  --muted-foreground: oklch(0.53 0.025 260);
+  --accent: oklch(0.87 0.11 80);
+  --accent-foreground: oklch(0.3 0.04 62);
+  --destructive: oklch(0.58 0.22 27);
+  --border: oklch(0.9 0.014 270);
+  --input: oklch(0.87 0.016 270);
+  --ring: oklch(0.6 0.18 274);
+  --radius: 0.875rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: "Inter", "SF Pro Text", "Segoe UI", sans-serif;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  min-height: 100%;
+  background: var(--background);
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 5%, oklch(0.92 0.055 280 / 0.65), transparent 25rem),
+    radial-gradient(circle at 90% 15%, oklch(0.93 0.08 82 / 0.55), transparent 22rem),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: oklch(0.75 0.13 275 / 0.35);
+}
+
+.dot-grid {
+  background-image: radial-gradient(oklch(0.55 0.08 274 / 0.18) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.scrollbar-subtle {
+  scrollbar-color: oklch(0.78 0.02 270) transparent;
+  scrollbar-width: thin;
+}
