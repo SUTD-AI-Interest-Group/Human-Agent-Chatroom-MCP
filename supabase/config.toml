@@ -17,10 +17,28 @@ port = 54323
 
 [auth]
 enabled = true
-site_url = "http://localhost:3000"
-additional_redirect_urls = ["http://127.0.0.1:3000"]
+site_url = "https://human-agent-chatroom-mcp.vercel.app"
+additional_redirect_urls = [
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  "https://human-agent-chatroom-mcp.vercel.app",
+]
 enable_signup = true
 enable_anonymous_sign_ins = true
 
 [realtime]
 enabled = true
+
+# `supabase config push` sends this whole file, so anything left unset is pushed
+# as the CLI's local-development default rather than being left alone remotely.
+# These blocks pin the settings that would otherwise be silently weakened on the
+# hosted project. The app itself is anonymous-only and uses none of them, but
+# they matter the moment email auth is switched on.
+[auth.email]
+enable_confirmations = true
+max_frequency = "1m0s"
+otp_length = 8
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true

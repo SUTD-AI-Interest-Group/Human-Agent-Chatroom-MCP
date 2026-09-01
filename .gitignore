@@ -4,9 +4,9 @@ node_modules
 coverage
 *.log
 *.tsbuildinfo
-.env
-.env.local
-.env.*.local
+.env*
+# Keep the negation last: gitignore is last-match-wins, so `.env*` above would
+# otherwise re-ignore the checked-in template.
 !.env.example
 .DS_Store
 supabase/.temp

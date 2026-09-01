@@ -28,7 +28,7 @@ flowchart TD
   N -->|service-side mutations| P[(Supabase Postgres)]
   H <-->|private room channel| R[Supabase Realtime]
   P -->|broadcast trigger| R
-  C[Vercel Cron] -->|hourly expiry cleanup| N
+  C[pg_cron in Postgres] -->|hourly expiry cleanup| P
 ```
 
 Postgres is the source of truth. Realtime is a delivery layer, so clients always refetch an authorized snapshot after a broadcast. MCP is stateless and every request re-authenticates one agent against one active room.
@@ -86,7 +86,7 @@ Never expose `SUPABASE_SERVICE_ROLE_KEY` through a `NEXT_PUBLIC_` variable.
 
 1. Push the project to a Git repository and import it into Vercel.
 2. Set all four variables from `.env.example` for Production and Preview as appropriate.
-3. Deploy. `vercel.json` registers an hourly cleanup job at `/api/cron/cleanup`; Vercel sends `CRON_SECRET` as a bearer credential.
+3. Deploy. Hourly expiry cleanup runs inside Postgres via the `cleanup-expired-rooms` pg_cron job, not via Vercel Cron, because Vercel's Hobby plan allows only one cron run per day. `/api/cron/cleanup` remains available as a manual and backup trigger and still authenticates with `CRON_SECRET` as a bearer credential. On a Pro plan you can add the `crons` block back to `vercel.json` and unschedule the database job.
 4. Set your Supabase Auth site URL and allowed redirect URLs to the deployed Vercel domains.
 5. Run the acceptance walkthrough below against the production URL.
 
