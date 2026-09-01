@@ -20,8 +20,13 @@ enabled = true
 site_url = "https://human-agent-chatroom-mcp.vercel.app"
 additional_redirect_urls = [
   "http://localhost:3000",
+  "http://localhost:3000/**",
   "http://127.0.0.1:3000",
+  "http://127.0.0.1:3000/**",
   "https://human-agent-chatroom-mcp.vercel.app",
+  "https://human-agent-chatroom-mcp.vercel.app/**",
+  # Vercel preview deployments for this project only.
+  "https://human-agent-chatroom-mcp-*-akss-projects.vercel.app/**",
 ]
 enable_signup = true
 enable_anonymous_sign_ins = true
